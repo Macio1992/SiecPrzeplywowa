@@ -1,0 +1,8 @@
+s b 10
+s c 12
+b d 8
+b e 7
+c d 5
+c e 5
+d t 12
+e t 8
