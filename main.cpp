@@ -8,7 +8,7 @@ using namespace std;
 int main() {
 
 	Siec siec;
-	siec.uzupelnijVector();
+	//siec.uzupelnijVector();
 	siec.wypisz();
 
 	siec.algorithm();

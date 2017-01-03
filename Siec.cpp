@@ -7,7 +7,22 @@
 
 using namespace std;
 
-Siec::Siec(){}
+Siec::Siec(){
+	
+	uzupelnijVector();
+
+
+	for (int i = 0; i < krawedzie.size(); i++) {
+		if (krawedzie[i].getWychodzacy().getName() == getZrodlo().getName()) {
+			Wierzcholek temp = krawedzie[i].getWychodzacy();
+			temp.setCecha(krawedzie[i].getWychodzacy().getName());
+			temp.setZnakCechy('-');
+			temp.setWartoscCechy(1000);
+			krawedzie[i].setWierzcholekWychodzacy(temp);
+		}
+	}
+
+}
 
 Siec::~Siec(){}
 
@@ -159,32 +174,110 @@ void Siec::algorithm() {
 
 	//dlaczego nie dziala set na wierzcholek
 	if (sprawdzCzyjestUjscie() && sprawdzCzyJestZrodlo() && sprawdzCzyJestDrogaPomiedzyZrodlemAUjsciem()) {
-		
+
 		Wierzcholek beg = getZrodlo();
 		Wierzcholek end = getUjscie();
 		Wierzcholek temp;
 
-		for (int i = 0; i < krawedzie.size(); i++) {
-			if (krawedzie[i].getWchodzacy().getName() == beg.getName()) {
-				temp = krawedzie[i].getWchodzacy();
-				temp.setCecha(beg.getName());
-				temp.setZnakCechy('-');
-				temp.setWartoscCechy(1000);
-				krawedzie[i].setWierzcholekWchodzacy(temp);
+		beg.setWartoscCechy(1000);
+		
+			for (int i = 0; i < krawedzie.size(); i++) {
+				if (krawedzie[i].getWychodzacy().getName() == beg.getName() && krawedzie[i].getWchodzacy().getZnakCechy() == ' ') {
+					temp = krawedzie[i].getWchodzacy();
+					temp.setCecha(beg.getName());
+					temp.setZnakCechy('+');
+					temp.setWartoscCechy(min(beg.getWartoscCechy(), (krawedzie[i].getMaksymalnaPrzepustowosc() - krawedzie[i].getAktualnaPrzepustowosc())));
+					krawedzie[i].setWierzcholekWchodzacy(temp);
+				}
 			}
-			else if (krawedzie[i].getWychodzacy().getName() == beg.getName()) {
-				temp = krawedzie[i].getWychodzacy();
-				temp.setCecha(beg.getName());
-				temp.setZnakCechy('-');
-				temp.setWartoscCechy(1000);
-				krawedzie[i].setWierzcholekWychodzacy(temp);
-			}
-		}
 
+			beg = temp;
+			
+			wypisz();
+			cout << "temp: " << temp.toString() << endl;
+
+		/*
+		Wierzcholek beg = getZrodlo();
+		Wierzcholek end = getUjscie();
+		Wierzcholek temp;
+
+		
 		beg.setWartoscCechy(1000);
 
 		int licznik = 0;
 		
+		while (beg.getName() != end.getName()) {
+			licznik = 0;
+			for (int i = 0; i < krawedzie.size(); i++) {
+				if (krawedzie[i].getWychodzacy().getName() == beg.getName()) {
+					//licznik++;
+					temp = krawedzie[i].getWchodzacy();
+					temp.setCecha(beg.getName());
+					temp.setZnakCechy('+');
+					temp.setWartoscCechy(min(beg.getWartoscCechy(), (krawedzie[i].getMaksymalnaPrzepustowosc() - krawedzie[i].getAktualnaPrzepustowosc())));
+					krawedzie[i].setWierzcholekWchodzacy(temp);
+				}
+			}
+
+
+			beg = temp;
+
+			//oznaczenie wszystkich wierzcholkow gdzie jest wychodzacy lub wchodzacy temp
+			for (int i = 0; i < krawedzie.size(); i++)
+				if (krawedzie[i].getWchodzacy().getName() == temp.getName())
+					krawedzie[i].setWierzcholekWchodzacy(temp);
+				else if (krawedzie[i].getWychodzacy().getName() == temp.getName())
+					krawedzie[i].setWierzcholekWychodzacy(temp);
+		}
+		wypisz();
+		
+		beg = getZrodlo();
+
+		while (end.getName() != beg.getName()) {
+			for (int i = 0; i < krawedzie.size(); i++) {
+				if (krawedzie[i].getWchodzacy().getName() == end.getName() && krawedzie[i].getWychodzacy().getZnakCechy() != ' ') {
+					temp = krawedzie[i].getWychodzacy();
+					krawedzie[i].setAktualnaPrzepustowosc(krawedzie[i].getWchodzacy().getWartoscCechy());
+				}
+			}
+			end = temp;
+		}
+
+		wypisz();
+		
+		for (int i = 0; i < krawedzie.size(); i++) {
+
+			if (krawedzie[i].getWychodzacy().getName() != getZrodlo().getName()) {
+				temp = krawedzie[i].getWchodzacy();
+				temp.setCecha(' ');
+				temp.setWartoscCechy(0);
+				temp.setZnakCechy(' ');
+				krawedzie[i].setWierzcholekWchodzacy(temp);
+				temp = krawedzie[i].getWychodzacy();
+				temp.setCecha(' ');
+				temp.setWartoscCechy(0);
+				temp.setZnakCechy(' ');
+				krawedzie[i].setWierzcholekWychodzacy(temp);
+			}
+			else {
+				temp = krawedzie[i].getWchodzacy();
+				temp.setCecha(' ');
+				temp.setWartoscCechy(0);
+				temp.setZnakCechy(' ');
+				krawedzie[i].setWierzcholekWchodzacy(temp);
+			}
+			
+			
+		}
+		
+		
+		wypisz();
+		
+		end = getUjscie();
+
+		cout << "beg: " << beg.toString() << endl;
+		cout << "end: " << end.toString() << endl;
+
 		while (beg.getName() != end.getName()) {
 			licznik = 0;
 			for (int i = 0; i < krawedzie.size(); i++) {
@@ -207,26 +300,8 @@ void Siec::algorithm() {
 					krawedzie[i].setWierzcholekWchodzacy(temp);
 				else if (krawedzie[i].getWychodzacy().getName() == temp.getName())
 					krawedzie[i].setWierzcholekWychodzacy(temp);
-		}
+		}*/
 
-		beg = getZrodlo();
-
-		while (end.getName() != beg.getName()) {
-			for (int i = 0; i < krawedzie.size(); i++) {
-				if (krawedzie[i].getWchodzacy().getName() == end.getName() && krawedzie[i].getWychodzacy().getZnakCechy() != ' ') {
-					temp = krawedzie[i].getWychodzacy();
-					krawedzie[i].setAktualnaPrzepustowosc(krawedzie[i].getWchodzacy().getWartoscCechy());
-				}
-			}
-			end = temp;
-		}
-
-		wypisz();
-		
-		
-
-		wypisz();
-		
 	}
 	else {
 		cout << "Niepoprawna siec.";
