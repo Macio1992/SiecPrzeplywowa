@@ -8,10 +8,10 @@ using namespace std;
 int main() {
 
 	Siec siec;
-	//siec.uzupelnijVector();
-	siec.wypisz();
+	//siec.wypisz();
 
 	siec.algorithm();
+
 
 	system("PAUSE");
 	return 0;
