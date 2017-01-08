@@ -27,6 +27,8 @@ void Krawedz::setAktualnaPrzepustowosc(int a) {
 
 string Krawedz::toString() {
 	stringstream stm;
+	
+
 	stm << getWychodzacy().toString() << " > "
 		<< getAktualnaPrzepustowosc() << "/" << getMaksymalnaPrzepustowosc() << " > "
 		<< getWchodzacy().toString() << endl;

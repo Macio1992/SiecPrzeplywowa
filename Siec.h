@@ -4,6 +4,7 @@
 #include "Krawedz.h"
 #include "Wierzcholek.h"
 #include <vector>
+#include <deque>
 
 using namespace std;
 
@@ -15,13 +16,18 @@ public:
 	void uzupelnijVector();
 	bool sprawdzCzyWierzcholekIstnieje(Wierzcholek);
 	void wypisz();
-	Wierzcholek getWierzcholek(char);
+	int getIndeksWierzcholka(Wierzcholek w);
 	bool sprawdzCzyjestUjscie();
 	bool sprawdzCzyJestZrodlo();
 	Wierzcholek getUjscie();
 	Wierzcholek getZrodlo();
 	bool sprawdzCzyJestDrogaPomiedzyZrodlemAUjsciem();
 	void algorithm();
+	Wierzcholek cechowanie(deque<Wierzcholek> &, Wierzcholek);
+	void przeplyw(Wierzcholek);
+	void minimalnyPrzekroj();
+	void wyczyscKrawedzie();
+	bool sprawdzCzyMaGdzieIsc(Wierzcholek);
 
 private:
 	vector<Wierzcholek> wierzcholki;

@@ -9,6 +9,7 @@ Wierzcholek::Wierzcholek(char n) {
 	cecha = ' ';
 	znak_cechy = ' ';
 	wartosc_cechy = 0;
+	czyJestNaSciezce = false;
 }
 
 Wierzcholek::Wierzcholek() {}
@@ -53,7 +54,19 @@ bool Wierzcholek::operator==(Wierzcholek obj2) {
 
 string Wierzcholek::toString() {
 	stringstream stm;
-	stm << name << "(" << cecha << znak_cechy << "," << wartosc_cechy<<")";
+	string s;
+
+	if (czyJestNaSciezce) s = "S->>";
+
+	stm << name << "(" << cecha << znak_cechy << "," << wartosc_cechy<<")"<<s;
 	return stm.str();
 }
 
+
+bool Wierzcholek::getCzyJestNaSciezce() {
+	return czyJestNaSciezce;
+}
+
+void Wierzcholek::setCzyJestNaSciezce(bool c) {
+	czyJestNaSciezce = c;
+}

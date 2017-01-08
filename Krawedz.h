@@ -20,12 +20,14 @@ public:
 	int getMaksymalnaPrzepustowosc();
 	int getAktualnaPrzepustowosc();
 	string toString();
+	
 
 private:
 	Wierzcholek wychodzacy;
 	Wierzcholek wchodzacy;
 	int aktualna_przepustowosc;
 	int maksymalna_przepustowosc;
+	
 };
 
 
