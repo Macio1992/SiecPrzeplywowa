@@ -1,0 +1,15 @@
+s a 1
+s b 1
+s c 1
+a b 1
+b a 1
+b c 1
+c b 1
+d e 1
+d t 1
+e d 1
+e f 1
+e b 1
+f e 1
+f t 1
+e t 1

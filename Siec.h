@@ -21,6 +21,7 @@ public:
 	bool sprawdzCzyJestZrodlo();
 	Wierzcholek getUjscie();
 	Wierzcholek getZrodlo();
+	bool sprawdzCzyJestDrogaOdZrodlaDoUjscia();
 	void algorithm();
 	Wierzcholek cechowanie(Wierzcholek);
 	void przeplyw(Wierzcholek);

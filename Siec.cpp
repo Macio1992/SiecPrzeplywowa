@@ -116,6 +116,37 @@ bool Siec::sprawdzCzyJestZrodlo() {
 	return (l2 == 1) ? true : false;
 
 }
+void wypiszBoole(bool *visited, int n) {
+	for (int i = 0; i < n; i++)
+		if (visited[i]) cout << i << ". Odwiedzony" << endl;
+		else
+			cout << i << ". Nieodwiedzony" << endl;
+	cout << endl;
+}
+bool Siec::sprawdzCzyJestDrogaOdZrodlaDoUjscia() {
+
+	queue<Wierzcholek> queue;
+	Wierzcholek temp = getZrodlo();
+	bool *v = new bool[wierzcholki.size()];
+	for (int i = 0; i < wierzcholki.size(); i++) v[i] = false;
+
+	queue.push(temp);
+
+	while (!queue.empty()) {
+		temp = queue.front();
+		queue.pop();
+		v[getIndeksWierzcholka(temp)] = true;
+		for (int i = 0; i < krawedzie.size(); i++) {
+			if (krawedzie[i].getWychodzacy().getName() == temp.getName() && !v[getIndeksWierzcholka(krawedzie[i].getWchodzacy())]) {
+				
+				queue.push(krawedzie[i].getWchodzacy());
+				v[getIndeksWierzcholka(krawedzie[i].getWchodzacy())] = true;
+			}
+		}
+	}
+
+	return v[getIndeksWierzcholka(getUjscie())] ? true : false;
+}
 
 Wierzcholek Siec::getUjscie() {
 	
@@ -144,13 +175,7 @@ Wierzcholek Siec::getZrodlo() {
 	return wierzcholki[found];
 }
 
-void wypiszBoole(bool *visited, int n) {
-	for (int i = 0; i < n; i++)
-		if (visited[i]) cout <<i<< ". Odwiedzony" << endl;
-		else
-			cout <<i<< ". Nieodwiedzony"<<endl;
-	cout << endl;
-}
+
 
 void wypiszKolejke(deque<Wierzcholek> &queue) {
 	if (!queue.empty()) {
@@ -312,7 +337,7 @@ bool Siec::sprawdzCzyMaGdzieIsc(Wierzcholek temp) {
 
 void Siec::algorithm() {
 
-	if (sprawdzCzyjestUjscie() && sprawdzCzyJestZrodlo()) {
+	if (sprawdzCzyjestUjscie() && sprawdzCzyJestZrodlo() && sprawdzCzyJestDrogaOdZrodlaDoUjscia()) {
 
 		Wierzcholek beg = getZrodlo();
 		Wierzcholek temp;
@@ -323,21 +348,20 @@ void Siec::algorithm() {
 			temp = cechowanie(beg);
 			przeplyw(temp);
 			wypisz();
-			if(visited[getIndeksWierzcholka(getUjscie())])
+			if (visited[getIndeksWierzcholka(getUjscie())])
 				wyczyscKrawedzie();
 		} while (visited[getIndeksWierzcholka(getUjscie())]);
-		
+
 		minimalnyPrzekroj();
 	}
-
 	else {
 		cout << "Niepoprawna siec.";
 		if (!sprawdzCzyjestUjscie())
 			cout << " Nie ma jednego ujscia." << endl;
 		if (!sprawdzCzyJestZrodlo())
 			cout << " Nie ma jednego zrodla." << endl;
-		//if (!sprawdzCzyJestDrogaPomiedzyZrodlemAUjsciem())
-			//cout << " Nie ma drogi ze zrodla do ujscia." << endl;
+		if (!sprawdzCzyJestDrogaOdZrodlaDoUjscia())
+			cout << " Nie ma drogi ze zrodla do ujscia." << endl;
 	}
 
 }
