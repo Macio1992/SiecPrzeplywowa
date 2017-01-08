@@ -116,13 +116,7 @@ bool Siec::sprawdzCzyJestZrodlo() {
 	return (l2 == 1) ? true : false;
 
 }
-void wypiszBoole(bool *visited, int n) {
-	for (int i = 0; i < n; i++)
-		if (visited[i]) cout << i << ". Odwiedzony" << endl;
-		else
-			cout << i << ". Nieodwiedzony" << endl;
-	cout << endl;
-}
+
 bool Siec::sprawdzCzyJestDrogaOdZrodlaDoUjscia() {
 
 	queue<Wierzcholek> queue;
@@ -173,19 +167,6 @@ Wierzcholek Siec::getZrodlo() {
 	}
 
 	return wierzcholki[found];
-}
-
-
-
-void wypiszKolejke(deque<Wierzcholek> &queue) {
-	if (!queue.empty()) {
-		for (int i = 0; i < queue.size(); i++)
-			cout << queue.at(i).getName() << " ";
-		cout << endl;
-	}
-	else
-		cout << "Kolejka pusta" << endl;
-	
 }
 
 Wierzcholek Siec::cechowanie(Wierzcholek temp) {
