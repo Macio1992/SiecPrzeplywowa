@@ -21,9 +21,8 @@ public:
 	bool sprawdzCzyJestZrodlo();
 	Wierzcholek getUjscie();
 	Wierzcholek getZrodlo();
-	bool sprawdzCzyJestDrogaPomiedzyZrodlemAUjsciem();
 	void algorithm();
-	Wierzcholek cechowanie(deque<Wierzcholek> &, Wierzcholek);
+	Wierzcholek cechowanie(Wierzcholek);
 	void przeplyw(Wierzcholek);
 	void minimalnyPrzekroj();
 	void wyczyscKrawedzie();
@@ -34,6 +33,7 @@ private:
 	vector<Krawedz> krawedzie;
 	char zrodlo;
 	char ujscie;
+	bool *visited;
 };
 
 #endif // !Siec_H
